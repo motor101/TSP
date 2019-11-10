@@ -119,20 +119,23 @@ public class NaturalSelectionForTSP {
         int citiesCount = Integer.parseInt(args[0]);
         int populationSize = (args.length >= 2) ? Integer.parseInt(args[1]) : 0;
         double mutationProbability = (args.length >= 3) ? Double.parseDouble(args[2]) : 0;
-        int generationsCount = (args.length >= 4) ? Integer.parseInt(args[3]) : 100;
+        int generationsCount = (args.length >= 4) ? Integer.parseInt(args[3]) : 500;
 
-        System.out.println("citiesCount = " + citiesCount);
-        System.out.println("populationSize = " + populationSize);
-        System.out.println("mutationProbability = " + mutationProbability);
-        System.out.println("generationsCount = " + generationsCount);
         NaturalSelectionForTSP tsp = new NaturalSelectionForTSP(citiesCount, populationSize, mutationProbability);
 
         for (int generation = 0; generation < generationsCount; generation++) {
             tsp.updateMatingPool();
-            System.out.printf("%f, generation = %d \n", tsp.matingPool[0].getLength(), generation);
+            switch (generation) {
+                case 10:
+                case 20:
+                case 50:
+                case 100:
+                    System.out.printf("%f, generation = %d \n", tsp.matingPool[0].getLength(), generation);
+            }
             tsp.mate();
             tsp.mutate();
         }
+        System.out.printf("%f, generation = %d \n", tsp.matingPool[0].getLength(), generationsCount);
 
     }
 }
